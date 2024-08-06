@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://brhty8vd66i5a"]
+
+[ext_resource type="Texture2D" uid="uid://7nte7ird8joa" path="res://Sprites/dice.png" id="1_wtuj2"]
+[ext_resource type="Script" path="res://Scripts/Dice.gd" id="2_p1pa3"]
+
+[node name="Dice" type="Sprite2D"]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("1_wtuj2")
+hframes = 6
+script = ExtResource("2_p1pa3")

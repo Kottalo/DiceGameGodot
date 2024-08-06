@@ -19,9 +19,9 @@ func _ready():
 	
 	var hexAngle = PI * 2 / 6
 	
-	var a = 0
+	var diceModel: PackedScene = preload("res://Models/Dice.tscn")
 	
-	for i in range(0, 6):
+	for i in range(6):
 		for j in range(1, slotBoardSize + 1):
 			var x = cos(hexAngle * i) * slotInterval * j
 			var y = sin(hexAngle * i) * slotInterval * j
@@ -35,11 +35,14 @@ func _ready():
 			rootNode.anchor_right = 0.5
 			rootNode.position = Vector2(x, y)
 			
+			var diceInstance = diceModel.instantiate()
+			diceInstance.position = Vector2(0, 0)
+			
+			print(diceInstance)
+			
 			diceSlots.add_child(rootNode)
 			
-			a += 1
-		
-			for k in range(0, j - 1):
+			for k in range(j - 1):
 				var childX = rootNode.position.x - (cos(hexAngle * i - hexAngle) * slotInterval)
 				var childY = rootNode.position.y - (sin(hexAngle * i - hexAngle) * slotInterval)
 
@@ -52,10 +55,6 @@ func _ready():
 				childNode.position = Vector2(childX, childY)
 				
 				diceSlots.add_child(childNode)
-				
-				a += 1
-	
-	print(a)
 	
 	pass # Replace with function body.
 
