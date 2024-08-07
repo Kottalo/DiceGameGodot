@@ -1,11 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://brhty8vd66i5a"]
+[gd_scene load_steps=2 format=3 uid="uid://f2fe1hynbux5"]
 
-[ext_resource type="Texture2D" uid="uid://7nte7ird8joa" path="res://Sprites/dice.png" id="1_wtuj2"]
-[ext_resource type="Script" path="res://Scripts/Dice.gd" id="2_p1pa3"]
+[ext_resource type="Texture2D" uid="uid://7nte7ird8joa" path="res://Sprites/dice.png" id="1_njb7h"]
 
-[node name="Dice" type="Sprite2D"]
-texture_filter = 1
-scale = Vector2(3, 3)
-texture = ExtResource("1_wtuj2")
+[node name="Dice" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_njb7h")
 hframes = 6
-script = ExtResource("2_p1pa3")

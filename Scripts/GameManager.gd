@@ -7,15 +7,15 @@ var slotBoardSize: int = 2
 func _ready():
 	var diceSlots = $"HBoxContainer/MidPanel/VBoxContainer/DiceSlots"
 	
-	var colorRect = ColorRect.new()
-	colorRect.size = Vector2(20, 20)
-	colorRect.anchor_top = 0.5
-	colorRect.anchor_bottom = 0.5
-	colorRect.anchor_left = 0.5
-	colorRect.anchor_right = 0.5
-	colorRect.position = Vector2(0, 0)
+	var centerNode = ColorRect.new()
+	centerNode.size = Vector2(20, 20)
+	centerNode.anchor_top = 0.5
+	centerNode.anchor_bottom = 0.5
+	centerNode.anchor_left = 0.5
+	centerNode.anchor_right = 0.5
+	centerNode.position = Vector2(0, 0)
 	
-	diceSlots.add_child(colorRect)
+	diceSlots.add_child(centerNode)
 	
 	var hexAngle = PI * 2 / 6
 	
@@ -35,13 +35,8 @@ func _ready():
 			rootNode.anchor_right = 0.5
 			rootNode.position = Vector2(x, y)
 			
-			var diceInstance = diceModel.instantiate()
-			diceInstance.position = Vector2(0, 0)
-			
-			print(diceInstance)
-			
 			diceSlots.add_child(rootNode)
-			
+
 			for k in range(j - 1):
 				var childX = rootNode.position.x - (cos(hexAngle * i - hexAngle) * slotInterval)
 				var childY = rootNode.position.y - (sin(hexAngle * i - hexAngle) * slotInterval)
@@ -55,7 +50,7 @@ func _ready():
 				childNode.position = Vector2(childX, childY)
 				
 				diceSlots.add_child(childNode)
-	
+
 	pass # Replace with function body.
 
 
