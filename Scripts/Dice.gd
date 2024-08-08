@@ -23,7 +23,7 @@ var diceTypeData: DiceTypeData:
 	set(newValue):
 		diceTypeData = newValue
 	
-		modulate = diceTypeData.color
+		self_modulate = diceTypeData.color
 	get:
 		return diceTypeData
 
