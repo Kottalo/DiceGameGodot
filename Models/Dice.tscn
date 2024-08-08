@@ -2,11 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://7nte7ird8joa" path="res://Sprites/dice.png" id="1_njb7h"]
 
-[node name="Dice" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D"]
 scale = Vector2(2, 2)
 texture = ExtResource("1_njb7h")
 hframes = 6
