@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DiceTypeData" load_steps=2 format=3 uid="uid://dfa2gdrg58hpe"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/DiceTypeData.gd" id="1_bxylw"]
+
+[resource]
+script = ExtResource("1_bxylw")
+name = "Water"
+color = Color(0, 0, 1, 1)

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DiceTypeData" load_steps=2 format=3 uid="uid://cryq5lssaei7x"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/DiceTypeData.gd" id="1_vnph5"]
+
+[resource]
+script = ExtResource("1_vnph5")
+name = "Air"
+color = Color(1, 1, 1, 1)

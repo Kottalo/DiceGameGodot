@@ -3,6 +3,11 @@ extends Node
 var slotInterval: float = 100
 var slotBoardSize: int = 2
 
+var diceNumberPerType: int = 8
+var dicePool: Array[Dice] = []
+var drawPerTurn: int = 5
+var diceLobby: Array[Dice] = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	await get_tree().process_frame
@@ -23,8 +28,6 @@ func _ready():
 	
 	var hexAngle = PI * 2 / 6
 	
-	var diceModel: PackedScene = preload("res://Models/Dice.tscn")
-	
 	for i in range(6):
 		for j in range(1, slotBoardSize + 1):
 			var x = cos(hexAngle * i) * slotInterval * j
@@ -32,11 +35,14 @@ func _ready():
 			
 			var rootNode = ColorRect.new()
 			
-			rootNode.size = Vector2(20, 20)
+			var nodeLength: float = 20
+			
+			rootNode.size = Vector2(nodeLength, nodeLength)
 			rootNode.anchor_top = 0.5
 			rootNode.anchor_bottom = 0.5
 			rootNode.anchor_left = 0.5
 			rootNode.anchor_right = 0.5
+			rootNode.pivot_offset = rootNode.size / 2
 			rootNode.position = Vector2(x, y)
 			
 			diceSlots.add_child(rootNode)
@@ -47,10 +53,6 @@ func _ready():
 
 				var childNode = ColorRect.new()
 				childNode.size = Vector2(20, 20)
-				childNode.anchor_top = 0.5
-				childNode.anchor_bottom = 0.5
-				childNode.anchor_left = 0.5
-				childNode.anchor_right = 0.5
 				childNode.position = Vector2(childX, childY)
 				
 				diceSlots.add_child(childNode)
@@ -65,21 +67,63 @@ func _ready():
 	
 	var cellLength = min(dividedSizeX, dividedSizeY)
 	
-	for i in range(8):
-		for j in range(4):
+	for i in range(gridSize.y):
+		for j in range(gridSize.x):
 			var cell = ColorRect.new()
 			
 			cell.size = Vector2(cellLength, cellLength)
+			cell.pivot_offset = cell.size / 2
 			
 			diceLobby.add_child(cell)
 			
-			var cellX = i * cellLength + (i * spacing.x)
-			var cellY = j * cellLength + (j * spacing.y)
+			var cellX = j * cellLength + (j * spacing.x)
+			var cellY = i * cellLength + (i * spacing.y)
 			
 			cell.position = Vector2(cellX, cellY)
+	
+	var diceTypeFiles = DirAccess.open("res://Resources/DiceData").get_files()
+	
+	var diceTypes = []
+	
+	var diceModel: PackedScene = preload("res://Models/Dice.tscn")
+	
+	for file in diceTypeFiles:
+		diceTypes.append(load("res://Resources/DiceData/"+file))
+	
+	
+	for i in range(len(diceTypes)):
+		var diceType = diceTypes[i]
+		
+		for j in range(diceNumberPerType):
+			var dice = diceModel.instantiate()
 			
+			dice.Roll()
+			dice.diceTypeData = diceType
+			
+			dicePool.append(dice)
+			
+			#$Canvas.add_child(dice)
+			
+			#dice.global_position = Vector2(i * 40, j * 40)
+	
+	DrawDice()
+
 	pass # Replace with function body.
 
+func DrawDice():
+	var diceLobbyNode = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
+	
+	for i in range(drawPerTurn):
+		var randomIndex = randf_range(0, len(dicePool))
+		
+		var dice: Dice = dicePool.pop_at(randomIndex)
+		
+		var targetCell: Control = diceLobbyNode.get_child(len(diceLobby))
+		
+		diceLobby.append(dice)
+		diceLobbyNode.add_child(dice)
+		
+		dice.global_position = targetCell.global_position + targetCell.pivot_offset
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://f2fe1hynbux5"]
+[gd_scene load_steps=5 format=3 uid="uid://f2fe1hynbux5"]
 
 [ext_resource type="Texture2D" uid="uid://7nte7ird8joa" path="res://Sprites/dice.png" id="1_njb7h"]
 [ext_resource type="Script" path="res://Scripts/Dice.gd" id="2_xooyi"]
+[ext_resource type="Script" path="res://Models/DiceArea2D.gd" id="3_u7fx1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lisdj"]
+size = Vector2(16, 16)
 
 [node name="Sprite2D" type="Sprite2D"]
 texture_filter = 1
@@ -17,12 +21,8 @@ closed = true
 width = 2.0
 default_color = Color(1, 1, 0, 1)
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_u7fx1")
 
-[connection signal="gui_input" from="Control" to="." method="_on_control_gui_input"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_lisdj")

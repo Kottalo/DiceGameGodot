@@ -2,6 +2,8 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var a = [1,2,3,4]
+	var b = []
 	
 	pass # Replace with function body.
 
