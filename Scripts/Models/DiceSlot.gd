@@ -2,6 +2,8 @@ extends ColorRect
 
 class_name DiceSlot
 
+@onready var Main = get_node("/root/Main")
+
 var coordinate: Vector2:
 	set(newValue):
 		coordinate = newValue

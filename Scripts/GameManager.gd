@@ -127,7 +127,7 @@ func _ready():
 			dicePool.append(dice)
 	
 	DrawDice()
-
+	
 	pass # Replace with function body.
 
 func DrawDice():
@@ -161,7 +161,8 @@ func SortDiceLobby():
 	tween = get_tree().create_tween()
 	
 	for index in range(lobbyDiceNode.get_child_count()):
-		tween.parallel().tween_property(lobbyDiceNode.get_child(index), "global_position", diceLobbyNode.get_child(index).global_position, 0.2)
+		var offset = diceLobbyNode.get_child(index).size / 2
+		tween.parallel().tween_property(lobbyDiceNode.get_child(index), "global_position", diceLobbyNode.get_child(index).global_position + offset, 0.2)
 	
 	tween.play()
 	
