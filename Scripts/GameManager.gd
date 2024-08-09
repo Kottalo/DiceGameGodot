@@ -3,14 +3,20 @@ extends Node
 var slotInterval: float = 100
 var slotBoardSize: int = 2
 
+var drawDuration: float = 0.3
+
 var diceNumberPerType: int = 8
 var dicePool: Array[Dice] = []
 var drawPerTurn: int = 5
-var lobbyDice: Array[Dice] = []
 var diceSlots: Array[DiceSlot] = []
 
+var firstPlaced: bool
+
 @onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
-@onready var diceNode: Node2D = $Canvas/Dice
+@onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
+@onready var slotDiceNode: Node2D = $Canvas/SlotDice
+
+@onready var tween: Tween
 
 var selectedDice: Dice = null:
 	set(newValue):
@@ -109,7 +115,6 @@ func _ready():
 	for file in diceTypeFiles:
 		diceTypes.append(load("res://Resources/DiceData/"+file))
 	
-	
 	for i in range(len(diceTypes)):
 		var diceType = diceTypes[i]
 		
@@ -128,19 +133,18 @@ func _ready():
 func DrawDice():
 	controllable = false
 	
-	var tween = get_tree().create_tween()
+	tween = get_tree().create_tween()
 	
 	for i in range(drawPerTurn):
 		var randomIndex = randf_range(0, len(dicePool))
 		
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
-		var targetCell: Control = diceLobbyNode.get_child(len(lobbyDice))
+		var targetCell: Control = diceLobbyNode.get_child(lobbyDiceNode.get_child_count())
 		
 		dice.visible = false
 		
-		lobbyDice.append(dice)
-		diceNode.add_child(dice)
+		lobbyDiceNode.add_child(dice)
 		
 		var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 		var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
@@ -149,10 +153,18 @@ func DrawDice():
 		
 		dice.global_position = startPosition
 		tween.tween_property(dice, "visible", true, 0)
-		tween.tween_property(dice, "global_position", targetPosition, .5)
+		tween.tween_property(dice, "global_position", targetPosition, drawDuration)
 		
 	controllable = true
 
+func SortDiceLobby():
+	tween = get_tree().create_tween()
+	
+	for index in range(lobbyDiceNode.get_child_count()):
+		tween.parallel().tween_property(lobbyDiceNode.get_child(index), "global_position", diceLobbyNode.get_child(index).global_position, 0.2)
+	
+	tween.play()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
