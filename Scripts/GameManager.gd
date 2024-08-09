@@ -72,10 +72,11 @@ func _ready():
 				diceSlots.append(childNode)
 	
 	for diceSlot in diceSlots:
+		var slotOffset = diceSlot.size / 2
 		var offset = diceSlotsNode.size / 2
 		
 		diceSlotsNode.add_child(diceSlot)
-		diceSlot.position = diceSlot.coordinate * slotInterval + offset
+		diceSlot.position = diceSlot.coordinate * slotInterval + offset - slotOffset
 	
 	var gridSize = Vector2(8, 4)
 	var spacing = Vector2(10, 10)
