@@ -14,21 +14,19 @@ func _ready():
 	
 	get_tree().get_root().size_changed.connect(_on_window_resized)
 	
+	var diceSlotModel = preload("res://Models/DiceSlot.tscn")
+	
+	var nodeLength: float = 20
+	
 	var diceSlots = $"HBoxContainer/MidPanel/VBoxContainer/DiceSlots"
 	
-	var centerNode = ColorRect.new()
-	centerNode.size = Vector2(20, 20)
-	centerNode.anchor_top = 0.5
-	centerNode.anchor_bottom = 0.5
-	centerNode.anchor_left = 0.5
-	centerNode.anchor_right = 0.5
+	var centerNode = diceSlotModel.instantiate()
+	centerNode.size = Vector2(nodeLength, nodeLength)
 	centerNode.position = Vector2(0, 0)
 	
 	diceSlots.add_child(centerNode)
 	
 	var hexAngle = PI * 2 / 6
-	
-	var diceSlotModel = preload("res://Models/DiceSlot.tscn")
 	
 	for i in range(6):
 		for j in range(1, slotBoardSize + 1):
@@ -36,8 +34,6 @@ func _ready():
 			var y = sin(hexAngle * i) * slotInterval * j
 			
 			var rootNode = diceSlotModel.instantiate()
-			
-			var nodeLength: float = 20
 			
 			rootNode.size = Vector2(nodeLength, nodeLength)
 			rootNode.position = Vector2(x, y)
@@ -49,7 +45,7 @@ func _ready():
 				var childY = rootNode.position.y - (sin(hexAngle * i - hexAngle) * slotInterval)
 
 				var childNode = ColorRect.new()
-				childNode.size = Vector2(20, 20)
+				childNode.size = Vector2(nodeLength, nodeLength)
 				childNode.position = Vector2(childX, childY)
 				
 				diceSlots.add_child(childNode)
