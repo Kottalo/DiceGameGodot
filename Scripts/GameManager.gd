@@ -7,6 +7,7 @@ var diceNumberPerType: int = 8
 var dicePool: Array[Dice] = []
 var drawPerTurn: int = 5
 var diceLobby: Array[Dice] = []
+var diceSlots: Array[DiceSlot] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,38 +19,46 @@ func _ready():
 	
 	var nodeLength: float = 20
 	
-	var diceSlots = $"HBoxContainer/MidPanel/VBoxContainer/DiceSlots"
+	var diceSlotsNode = $"HBoxContainer/MidPanel/VBoxContainer/DiceSlots"
 	
 	var centerNode = diceSlotModel.instantiate()
 	centerNode.size = Vector2(nodeLength, nodeLength)
 	centerNode.position = Vector2(0, 0)
 	
-	diceSlots.add_child(centerNode)
+	#diceSlots.add_child(centerNode)
+	diceSlots.append(centerNode)
 	
 	var hexAngle = PI * 2 / 6
 	
 	for i in range(6):
 		for j in range(1, slotBoardSize + 1):
-			var x = cos(hexAngle * i) * slotInterval * j
-			var y = sin(hexAngle * i) * slotInterval * j
+			var x = cos(hexAngle * i) * j
+			var y = sin(hexAngle * i) * j
 			
 			var rootNode = diceSlotModel.instantiate()
 			
 			rootNode.size = Vector2(nodeLength, nodeLength)
-			rootNode.position = Vector2(x, y)
+			rootNode.coordinate = Vector2(x, y)
+			rootNode.placable = j == slotBoardSize
 			
-			diceSlots.add_child(rootNode)
+			diceSlots.append(rootNode)
 
 			for k in range(j - 1):
-				var childX = rootNode.position.x - (cos(hexAngle * i - hexAngle) * slotInterval)
-				var childY = rootNode.position.y - (sin(hexAngle * i - hexAngle) * slotInterval)
+				var childX = rootNode.coordinate.x - cos(hexAngle * i - hexAngle)
+				var childY = rootNode.coordinate.y - sin(hexAngle * i - hexAngle)
 
-				var childNode = ColorRect.new()
+				var childNode = diceSlotModel.instantiate()
 				childNode.size = Vector2(nodeLength, nodeLength)
-				childNode.position = Vector2(childX, childY)
+				childNode.coordinate = Vector2(childX, childY)
 				
-				diceSlots.add_child(childNode)
-				
+				diceSlots.append(childNode)
+	
+	for diceSlot in diceSlots:
+		var offset = diceSlotsNode.size / 2
+		
+		diceSlotsNode.add_child(diceSlot)
+		diceSlot.position = diceSlot.coordinate * slotInterval + offset
+	
 	var diceLobby = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
 	
 	var gridSize = Vector2(8, 4)

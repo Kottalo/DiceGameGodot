@@ -2,13 +2,19 @@ extends ColorRect
 
 class_name DiceSlot
 
-var startable: bool:
+var coordinate: Vector2:
 	set(newValue):
-		startable = newValue
-		
-		color = Color.GREEN if startable else Color.WHITE
+		coordinate = newValue
 	get:
-		return startable
+		return coordinate
+
+var placable: bool:
+	set(newValue):
+		placable = newValue
+		
+		color = Color.GREEN if placable else Color.WHITE
+	get:
+		return placable
 
 var connectedSlots: Array[DiceSlot] = []
 
