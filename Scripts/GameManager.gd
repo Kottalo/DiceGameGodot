@@ -28,21 +28,18 @@ func _ready():
 	
 	var hexAngle = PI * 2 / 6
 	
+	var diceSlotModel = preload("res://Models/DiceSlot.tscn")
+	
 	for i in range(6):
 		for j in range(1, slotBoardSize + 1):
 			var x = cos(hexAngle * i) * slotInterval * j
 			var y = sin(hexAngle * i) * slotInterval * j
 			
-			var rootNode = ColorRect.new()
+			var rootNode = diceSlotModel.instantiate()
 			
 			var nodeLength: float = 20
 			
 			rootNode.size = Vector2(nodeLength, nodeLength)
-			rootNode.anchor_top = 0.5
-			rootNode.anchor_bottom = 0.5
-			rootNode.anchor_left = 0.5
-			rootNode.anchor_right = 0.5
-			rootNode.pivot_offset = rootNode.size / 2
 			rootNode.position = Vector2(x, y)
 			
 			diceSlots.add_child(rootNode)
@@ -101,10 +98,6 @@ func _ready():
 			dice.diceTypeData = diceType
 			
 			dicePool.append(dice)
-			
-			#$Canvas.add_child(dice)
-			
-			#dice.global_position = Vector2(i * 40, j * 40)
 	
 	DrawDice()
 
