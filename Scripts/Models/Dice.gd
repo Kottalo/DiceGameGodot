@@ -13,6 +13,8 @@ func _process(delta):
 func _on_control_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
+			if !Main.controllable: return
+			
 			if Main.selectedDice != null: Main.selectedDice.selected = false
 			Main.selectedDice = self if Main.selectedDice != self else null
 	pass # Replace with function body.

@@ -21,6 +21,12 @@ var selectedDice: Dice = null:
 	get:
 		return selectedDice
 
+var controllable: bool:
+	set(newValue):
+		controllable = newValue
+	get:
+		return controllable
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	await get_tree().process_frame
@@ -119,6 +125,10 @@ func _ready():
 	pass # Replace with function body.
 
 func DrawDice():
+	controllable = false
+	
+	var tween = get_tree().create_tween()
+	
 	for i in range(drawPerTurn):
 		var randomIndex = randf_range(0, len(dicePool))
 		
@@ -126,10 +136,21 @@ func DrawDice():
 		
 		var targetCell: Control = diceLobbyNode.get_child(len(lobbyDice))
 		
+		dice.visible = false
+		
 		lobbyDice.append(dice)
 		diceNode.add_child(dice)
 		
-		dice.global_position = targetCell.global_position + targetCell.pivot_offset
+		var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
+		var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
+		
+		var targetPosition = targetCell.global_position + targetCell.pivot_offset
+		
+		dice.global_position = startPosition
+		tween.tween_property(dice, "visible", true, 0)
+		tween.tween_property(dice, "global_position", targetPosition, .5)
+		
+	controllable = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
