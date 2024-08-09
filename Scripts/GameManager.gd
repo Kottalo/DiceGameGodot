@@ -6,8 +6,20 @@ var slotBoardSize: int = 2
 var diceNumberPerType: int = 8
 var dicePool: Array[Dice] = []
 var drawPerTurn: int = 5
-var diceLobby: Array[Dice] = []
+var lobbyDice: Array[Dice] = []
 var diceSlots: Array[DiceSlot] = []
+
+@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
+@onready var diceNode: Node2D = $Canvas/Dice
+
+var selectedDice: Dice = null:
+	set(newValue):
+		selectedDice = newValue
+		
+		if selectedDice != null:
+			selectedDice.selected = true
+	get:
+		return selectedDice
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -59,13 +71,11 @@ func _ready():
 		diceSlotsNode.add_child(diceSlot)
 		diceSlot.position = diceSlot.coordinate * slotInterval + offset
 	
-	var diceLobby = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
-	
 	var gridSize = Vector2(8, 4)
 	var spacing = Vector2(10, 10)
 	
-	var dividedSizeX = ( diceLobby.size.x - (spacing.x * (gridSize.x - 1)) ) / gridSize.x
-	var dividedSizeY = ( diceLobby.size.y - (spacing.y * (gridSize.y - 1)) ) / gridSize.y
+	var dividedSizeX = ( diceLobbyNode.size.x - (spacing.x * (gridSize.x - 1)) ) / gridSize.x
+	var dividedSizeY = ( diceLobbyNode.size.y - (spacing.y * (gridSize.y - 1)) ) / gridSize.y
 	
 	var cellLength = min(dividedSizeX, dividedSizeY)
 	
@@ -76,7 +86,7 @@ func _ready():
 			cell.size = Vector2(cellLength, cellLength)
 			cell.pivot_offset = cell.size / 2
 			
-			diceLobby.add_child(cell)
+			diceLobbyNode.add_child(cell)
 			
 			var cellX = j * cellLength + (j * spacing.x)
 			var cellY = i * cellLength + (i * spacing.y)
@@ -109,17 +119,15 @@ func _ready():
 	pass # Replace with function body.
 
 func DrawDice():
-	var diceLobbyNode = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
-	
 	for i in range(drawPerTurn):
 		var randomIndex = randf_range(0, len(dicePool))
 		
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
-		var targetCell: Control = diceLobbyNode.get_child(len(diceLobby))
+		var targetCell: Control = diceLobbyNode.get_child(len(lobbyDice))
 		
-		diceLobby.append(dice)
-		diceLobbyNode.add_child(dice)
+		lobbyDice.append(dice)
+		diceNode.add_child(dice)
 		
 		dice.global_position = targetCell.global_position + targetCell.pivot_offset
 

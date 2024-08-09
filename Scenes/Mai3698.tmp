@@ -250,7 +250,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.4
-text = "Draw / Turn"
+text = "Draw Per Turn"
 horizontal_alignment = 1
 vertical_alignment = 2
 
@@ -413,5 +413,3 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
 
 [node name="Canvas" type="Node2D" parent="."]
-
-[node name="Dice" type="Node2D" parent="Canvas"]

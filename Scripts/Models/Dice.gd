@@ -2,6 +2,21 @@ extends Sprite2D
 
 class_name Dice
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func _on_control_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.pressed:
+			if Main.selectedDice != null: Main.selectedDice.selected = false
+			Main.selectedDice = self if Main.selectedDice != self else null
+	pass # Replace with function body.
+
 var selected: bool:
 	set(newValue):
 		selected = newValue
@@ -29,17 +44,3 @@ var diceTypeData: DiceTypeData:
 
 func Roll():
 	diceValue = randf_range(1, 7)
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func _on_control_gui_input(event):
-	if event is InputEventMouseButton:
-		if event.pressed:
-			selected = !selected
-	pass # Replace with function body.
