@@ -2,6 +2,14 @@ extends ColorRect
 
 class_name DiceSlot
 
+var startable: bool:
+	set(newValue):
+		startable = newValue
+		
+		color = Color.GREEN if startable else Color.WHITE
+	get:
+		return startable
+
 var connectedSlots: Array[DiceSlot] = []
 
 # Called when the node enters the scene tree for the first time.
