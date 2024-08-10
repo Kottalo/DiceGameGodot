@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://xe7ve7e3rg7i"]
 
-[ext_resource type="Script" path="res://Scripts/Models/DiceSlot.gd" id="1_iftfg"]
+[ext_resource type="Script" path="res://scripts/models/dice_slot.gd" id="1_tavre"]
 
 [node name="DiceSlot" type="ColorRect"]
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_iftfg")
+script = ExtResource("1_tavre")

@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://f2fe1hynbux5"]
 
-[ext_resource type="Texture2D" uid="uid://7nte7ird8joa" path="res://Sprites/dice.png" id="1_njb7h"]
-[ext_resource type="Script" path="res://Scripts/Models/Dice.gd" id="2_ay0tp"]
+[ext_resource type="Texture2D" uid="uid://7nte7ird8joa" path="res://sprites/dice.png" id="1_emma3"]
+[ext_resource type="Script" path="res://scripts/models/dice.gd" id="2_lggg5"]
 
 [node name="Sprite2D" type="Sprite2D"]
 texture_filter = 1
 scale = Vector2(2, 2)
-texture = ExtResource("1_njb7h")
+texture = ExtResource("1_emma3")
 hframes = 6
-script = ExtResource("2_ay0tp")
+script = ExtResource("2_lggg5")
 
 [node name="Line2D" type="Line2D" parent="."]
 visible = false

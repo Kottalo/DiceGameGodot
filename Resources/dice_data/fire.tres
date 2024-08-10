@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="DiceTypeData" load_steps=2 format=3 uid="uid://fosuuq17n8un"]
 
-[ext_resource type="Script" path="res://Scripts/Resources/DiceTypeData.gd" id="1_ytsrp"]
+[ext_resource type="Script" path="res://scripts/resources/dice_type_data.gd" id="1_ytsrp"]
 
 [resource]
 script = ExtResource("1_ytsrp")

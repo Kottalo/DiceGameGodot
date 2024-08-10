@@ -39,7 +39,7 @@ func _ready():
 	
 	get_tree().get_root().size_changed.connect(_on_window_resized)
 	
-	var diceSlotModel = preload("res://Models/DiceSlot.tscn")
+	var diceSlotModel = preload("res://models/dice_slot.tscn")
 	
 	var nodeLength: float = 20
 	
@@ -106,14 +106,14 @@ func _ready():
 			
 			cell.position = Vector2(cellX, cellY)
 	
-	var diceTypeFiles = DirAccess.open("res://Resources/DiceData").get_files()
+	var diceTypeFiles = DirAccess.open("res://resources/dice_data").get_files()
 	
 	var diceTypes = []
 	
-	var diceModel: PackedScene = preload("res://Models/Dice.tscn")
+	var diceModel: PackedScene = preload("res://models/dice.tscn")
 	
 	for file in diceTypeFiles:
-		diceTypes.append(load("res://Resources/DiceData/"+file))
+		diceTypes.append(ResourceLoader.load("resources/dice_data/"+file))
 	
 	for i in range(len(diceTypes)):
 		var diceType = diceTypes[i]
