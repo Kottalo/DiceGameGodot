@@ -417,3 +417,5 @@ size_flags_stretch_ratio = 0.15
 [node name="LobbyDice" type="Node2D" parent="Canvas"]
 
 [node name="SlotDice" type="Node2D" parent="Canvas"]
+
+[node name="ConnectLines" type="Node2D" parent="Canvas"]

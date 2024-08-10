@@ -7,6 +7,8 @@ class_name DiceSlot
 var coordinate: Vector2:
 	set(newValue):
 		coordinate = newValue
+		
+		$Label.text = "%1.2f,%1.2f" % [coordinate.x, coordinate.y]
 	get:
 		return coordinate
 
