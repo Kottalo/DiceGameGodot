@@ -11,7 +11,15 @@ var drawPerTurn: int = 5
 var diceSlots: Array[DiceSlot] = []
 
 var firstPlaced: bool
-var discardable: bool
+var discardable: bool:
+	set(newValue):
+		discardable = newValue
+		
+		var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
+		
+		discardButton.disabled = !discardable
+	get:
+		return discardable
 
 @onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
@@ -39,6 +47,8 @@ func _ready():
 	await get_tree().process_frame
 	
 	get_tree().get_root().size_changed.connect(_on_window_resized)
+	
+	discardable = false
 	
 	var diceSlotModel = preload("res://models/dice_slot.tscn")
 	
