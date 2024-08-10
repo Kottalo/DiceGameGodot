@@ -11,6 +11,7 @@ var drawPerTurn: int = 5
 var diceSlots: Array[DiceSlot] = []
 
 var firstPlaced: bool
+var discardable: bool
 
 @onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
@@ -77,12 +78,19 @@ func _ready():
 				
 				diceSlots.append(childNode)
 	
-	for diceSlot in diceSlots:
+	for diceSlot: DiceSlot in diceSlots:
 		var slotOffset = diceSlot.size / 2
 		var offset = diceSlotsNode.size / 2
 		
 		diceSlotsNode.add_child(diceSlot)
 		diceSlot.position = diceSlot.coordinate * slotInterval + offset - slotOffset
+		
+		for diceSlot2 in diceSlots:
+			if diceSlot2 == diceSlot:
+				continue
+			
+			if diceSlot.coordinate.distance_to(diceSlot2.coordinate) <= 1:
+				diceSlot.connectedSlots.append(diceSlot2)
 	
 	var gridSize = Vector2(8, 4)
 	var spacing = Vector2(10, 10)
