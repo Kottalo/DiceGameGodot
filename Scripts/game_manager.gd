@@ -155,7 +155,7 @@ func DrawDice():
 		tween.tween_property(dice, "visible", true, 0)
 		tween.tween_property(dice, "global_position", targetPosition, drawDuration)
 		
-	controllable = true
+	tween.tween_property(self, "controllable", true, 0)
 
 func SortDiceLobby():
 	tween = get_tree().create_tween()

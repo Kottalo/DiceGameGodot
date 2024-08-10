@@ -15,11 +15,20 @@ func _process(delta):
 func _on_control_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			if !Main.controllable: return
+			if !Main.controllable or !selectable: return
 			
 			if Main.selectedDice != null: Main.selectedDice.selected = false
 			Main.selectedDice = self if Main.selectedDice != self else null
 	pass # Replace with function body.
+
+var selectable: bool = true:
+	set(newValue):
+		selectable = newValue
+		
+		if selectable == false:
+			selected = selectable
+	get:
+		return selectable
 
 var selected: bool:
 	set(newValue):

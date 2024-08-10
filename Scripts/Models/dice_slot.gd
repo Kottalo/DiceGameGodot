@@ -39,11 +39,13 @@ func _gui_input(event):
 				var tween = get_tree().create_tween()
 				
 				tween.tween_property(Main.selectedDice, "global_position", centerPosition, 0.3)
-				#Main.slotDiceNode.append(Main.lobbyDice.pop_at(Main.lobbyDice.find(self)))
-				#var target = get_node("/root/Main/Canvas/LobbyDice/"+Main.selectedDice.name)
-				var target = Main.lobbyDiceNode.get_child(Main.selectedDice.get_index())
+				
+				var target: Dice = Main.lobbyDiceNode.get_child(Main.selectedDice.get_index())
 				Main.lobbyDiceNode.remove_child(target)
 				Main.slotDiceNode.add_child(target)
+				
+				target.selected = false
+				target.selectable = false
 				
 				Main.SortDiceLobby()
 	pass # Replace with function body.
