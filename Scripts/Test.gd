@@ -2,8 +2,9 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var a = [1,2,3,4]
-	var b = []
+	var a = str(1.7323984).pad_decimals(2)
+	
+	print(a)
 	
 	pass # Replace with function body.
 

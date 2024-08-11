@@ -109,6 +109,21 @@ func _ready():
 			
 			if slot2.coordinate.distance_to(slot.coordinate) <= 1:
 				slot.connectedSlots.append(slot2)
+
+	# Get the inner slots
+	var innerSlots = diceSlots.filter(
+		func(diceSlot: DiceSlot) -> bool:
+			return diceSlot.coordinate.distance_to(Vector2.ZERO) <= slotBoardSize - 1 and diceSlot.coordinate != Vector2.ZERO
+	)
+
+	# Connect the inner slots
+	for slot: DiceSlot in innerSlots:
+		for slot2: DiceSlot in innerSlots:
+			if slot == slot2 or slot.coordinate.y == slot2.coordinate.y:
+				continue
+			
+			if slot2.coordinate.distance_to(slot.coordinate) <= 1:
+				slot.connectedSlots.append(slot2)
 	
 	# Get the mid horizontal slots
 	var midHorizontalSlots = diceSlots.filter(
@@ -120,6 +135,41 @@ func _ready():
 	for slot: DiceSlot in midHorizontalSlots:
 		for slot2: DiceSlot in midHorizontalSlots:
 			if slot == slot2:
+				continue
+			
+			if slot2.coordinate.distance_to(slot.coordinate) <= 1:
+				slot.connectedSlots.append(slot2)
+	
+	# Get the mid vertical slots
+	var midVerticalSlots = diceSlots.filter(
+		func(diceSlot: DiceSlot) -> bool:
+			return floor(diceSlot.coordinate.x * 10) == 0
+	)
+	
+	# Connect mid vertical slots
+	for slot: DiceSlot in midVerticalSlots:
+		for slot2: DiceSlot in midVerticalSlots:
+			if slot == slot2:
+				continue
+			
+			if slot2.coordinate.distance_to(slot.coordinate) <= slotBoardSize:
+				slot.connectedSlots.append(slot2)
+	
+	var irregularSlotCoordinates = ["1.00,1.73", "0.00,1.73", "0.50,0.87"]
+	
+	# Get the irregular slots
+	var irregularSlots = diceSlots.filter(
+		func(diceSlot: DiceSlot) -> bool:
+			var coordinate = diceSlot.coordinate
+			var coordinateStr = "%1.2f,%1.2f" % [abs(coordinate.x), abs(coordinate.y)]
+			
+			return coordinateStr in irregularSlotCoordinates
+	)
+	
+	# Connect irregular slots
+	for slot: DiceSlot in irregularSlots:
+		for slot2: DiceSlot in irregularSlots:
+			if slot == slot2 or floor(slot.coordinate.y * 10) == floor(slot2.coordinate.y * 10):
 				continue
 			
 			if slot2.coordinate.distance_to(slot.coordinate) <= 1:
