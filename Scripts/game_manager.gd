@@ -94,25 +94,31 @@ func _ready():
 		
 		diceSlotsNode.add_child(diceSlot)
 		diceSlot.position = diceSlot.coordinate * slotInterval + offset - slotOffset
-		
-		print(diceSlot.coordinate)
-		
-		#for diceSlot2 in diceSlots:
-			#if diceSlot2 == diceSlot:
-				#continue
-			#
-			#if diceSlot.coordinate.distance_to(diceSlot2.coordinate) <= 1:
-				#diceSlot.connectedSlots.append(diceSlot2)
 	
 	# Get the outer slots
 	var outerSlots = diceSlots.filter(
 		func(diceSlot: DiceSlot) -> bool:
-			return diceSlot.coordinate.distance_to(Vector2.ZERO) > 1
+			return diceSlot.coordinate.distance_to(Vector2.ZERO) > slotBoardSize - 1
 	)
 
 	# Connect the outer slots
 	for slot: DiceSlot in outerSlots:
 		for slot2: DiceSlot in outerSlots:
+			if slot == slot2:
+				continue
+			
+			if slot2.coordinate.distance_to(slot.coordinate) <= 1:
+				slot.connectedSlots.append(slot2)
+	
+	# Get the mid horizontal slots
+	var midHorizontalSlots = diceSlots.filter(
+		func(diceSlot: DiceSlot) -> bool:
+			return floor(diceSlot.coordinate.y * 10) == 0
+	)
+	
+	# Connect mid horizontal slots
+	for slot: DiceSlot in midHorizontalSlots:
+		for slot2: DiceSlot in midHorizontalSlots:
 			if slot == slot2:
 				continue
 			
