@@ -235,8 +235,10 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Container" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"]
+[node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"]
 layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
 
 [node name="DiceStatus" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
 layout_mode = 2
@@ -357,8 +359,10 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Container" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection"]
+[node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection"]
 layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
 
 [node name="DiscardButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
 layout_mode = 2

@@ -1,4 +1,4 @@
-extends Control
+extends Sprite2D
 
 class_name Dice
 
@@ -12,7 +12,7 @@ func _ready():
 func _process(delta):
 	pass
 
-func _gui_input(event):
+func _on_control_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if !Main.controllable or !selectable: return
@@ -42,7 +42,7 @@ var diceValue: int:
 	set(newValue):
 		diceValue = newValue
 		
-		$Sprite2D.frame = diceValue - 1
+		frame = diceValue - 1
 	
 	get:
 		return diceValue
@@ -57,17 +57,3 @@ var diceTypeData: DiceTypeData:
 
 func Roll():
 	diceValue = randf_range(1, 7)
-
-
-func _on_resized():
-	var spriteSize = $Sprite2D.get_rect().size
-	
-	var offset = size / 2
-	
-	var scaleX = size.x / spriteSize.x
-	var scaleY = size.y / spriteSize.y
-	
-	$Sprite2D.scale = Vector2(scaleX, scaleY)
-	$Sprite2D.position = offset
-	
-	pass # Replace with function body.

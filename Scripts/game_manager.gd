@@ -22,7 +22,7 @@ var discardable: bool:
 	get:
 		return discardable
 
-@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/FlowContainer"
+@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/Container"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
 @onready var discadedDiceNode: Node2D = $Canvas/DiscardedDice
@@ -200,20 +200,6 @@ func _ready():
 	
 	var cellLength = min(dividedSizeX, dividedSizeY)
 	
-	#for i in range(gridSize.y):
-		#for j in range(gridSize.x):
-			#var cell = ColorRect.new()
-			#
-			#cell.size = Vector2(cellLength, cellLength)
-			#cell.pivot_offset = cell.size / 2
-			#
-			#diceLobbyNode.add_child(cell)
-			#
-			#var cellX = j * cellLength + (j * spacing.x)
-			#var cellY = i * cellLength + (i * spacing.y)
-			#
-			#cell.position = Vector2(cellX, cellY)
-	
 	var diceTypeFiles = DirAccess.open("res://resources/dice_data").get_files()
 	
 	var diceTypes = []
@@ -237,46 +223,40 @@ func _ready():
 	DrawDice()
 	
 	pass # Replace with function body.
+	
 
 func DrawDice():
 	controllable = false
 	
-	tween = get_tree().create_tween()
+	tween = create_tween()
+	
+	tween.pause()
 	
 	var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 	var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
+	
+	var hSeparation = 5
+	var totalHSeparation = (diceLobbyColumn - 1) * hSeparation
 	
 	for i in range(drawPerTurn):
 		var randomIndex = randf_range(0, len(dicePool))
 		
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
-		slotDiceNode.add_child(dice)
-		
-		var cell = ColorRect.new()
-		
-		var totalHSeparation = (diceLobbyColumn - 1) * diceLobbyNode["theme_override_constants/h_separation"]
-		
-		var cellLength: float = (diceLobbyNode.size.x - totalHSeparation) / diceLobbyColumn
-		
-		cell.custom_minimum_size = Vector2(cellLength, cellLength)
-		
-		dice.size = cell.custom_minimum_size
-		
-		diceLobbyNode.add_child(cell)
-		
-		var targetCell: Control = diceLobbyNode.get_child(lobbyDiceNode.get_child_count())
+		lobbyDiceNode.add_child(dice)
 		
 		dice.visible = false
 		
-		var targetPosition = targetCell.global_position + targetCell.pivot_offset
-		
 		dice.global_position = startPosition
 		
-		tween.tween_property(dice, "visible", true, 0)
-		tween.tween_property(dice, "global_position", targetPosition, drawDuration)
+		var position: Vector2 = Vector2(50 * i, 50)
+		
+		tween.tween_property(dice, "visible", true, 1)
+		tween.tween_property(dice, "global_position", position, drawDuration)
 		
 		tween.tween_callback(func (): print(111))
+	
+	tween.play()
 		
 	tween.tween_property(self, "controllable", true, 0)
 
