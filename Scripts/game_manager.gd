@@ -55,6 +55,7 @@ func _ready():
 	var nodeLength: float = 20
 	
 	var diceSlotsNode = $"HBoxContainer/MidPanel/VBoxContainer/DiceSlots"
+	var slotsNode = $Canvas/Slots
 	
 	var centerNode = diceSlotModel.instantiate()
 	centerNode.size = Vector2(nodeLength, nodeLength)
@@ -92,8 +93,9 @@ func _ready():
 		var slotOffset = diceSlot.size / 2
 		var offset = diceSlotsNode.size / 2
 		
-		diceSlotsNode.add_child(diceSlot)
-		diceSlot.position = diceSlot.coordinate * slotInterval + offset - slotOffset
+		slotsNode.add_child(diceSlot)
+		var locationPosition: Vector2 = diceSlot.coordinate * slotInterval + offset - slotOffset
+		diceSlot.global_position = diceSlotsNode.global_position + locationPosition
 	
 	# Get the outer slots
 	var outerSlots = diceSlots.filter(
