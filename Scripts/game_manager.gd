@@ -280,9 +280,6 @@ func DrawDice():
 		
 	tween.tween_property(self, "controllable", true, 0)
 
-func print2():
-	print(111)
-
 func DiscardDice():
 	var tween = create_tween().set_parallel(true)
 	
