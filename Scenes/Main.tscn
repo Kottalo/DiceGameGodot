@@ -224,10 +224,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DiceLobby" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
+[node name="DiceLobby" type="MarginContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"]
+layout_mode = 2
 
 [node name="DiceStatus" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
 layout_mode = 2
@@ -339,10 +346,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DiscardSection" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
+[node name="DiscardSection" type="MarginContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
 
 [node name="DiscardButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
 layout_mode = 2
@@ -423,3 +439,5 @@ size_flags_stretch_ratio = 0.15
 [node name="Slots" type="Node2D" parent="Canvas"]
 
 [node name="SlotDice" type="Node2D" parent="Canvas"]
+
+[connection signal="pressed" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton" to="." method="DiscardDice"]

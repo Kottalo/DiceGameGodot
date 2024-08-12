@@ -9,22 +9,22 @@ var diceNumberPerType: int = 8
 var dicePool: Array[Dice] = []
 var drawPerTurn: int = 5
 var diceSlots: Array[DiceSlot] = []
-var discardedDice: Array[Dice] = []
 
 var firstPlaced: bool
 var discardable: bool:
 	set(newValue):
 		discardable = newValue
 		
-		var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
-		
 		discardButton.disabled = !discardable
 	get:
 		return discardable
 
-@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"
+@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/FlowContainer"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
+@onready var discadedDiceNode: Node2D = $Canvas/DiscardedDice
+@onready var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
+@onready var discardSectionControl = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection
 
 @onready var tween: Tween
 
@@ -34,6 +34,8 @@ var selectedDice: Dice = null:
 		
 		if selectedDice != null:
 			selectedDice.selected = true
+		
+		discardable = selectedDice != null
 	get:
 		return selectedDice
 
@@ -195,19 +197,19 @@ func _ready():
 	
 	var cellLength = min(dividedSizeX, dividedSizeY)
 	
-	for i in range(gridSize.y):
-		for j in range(gridSize.x):
-			var cell = ColorRect.new()
-			
-			cell.size = Vector2(cellLength, cellLength)
-			cell.pivot_offset = cell.size / 2
-			
-			diceLobbyNode.add_child(cell)
-			
-			var cellX = j * cellLength + (j * spacing.x)
-			var cellY = i * cellLength + (i * spacing.y)
-			
-			cell.position = Vector2(cellX, cellY)
+	#for i in range(gridSize.y):
+		#for j in range(gridSize.x):
+			#var cell = ColorRect.new()
+			#
+			#cell.size = Vector2(cellLength, cellLength)
+			#cell.pivot_offset = cell.size / 2
+			#
+			#diceLobbyNode.add_child(cell)
+			#
+			#var cellX = j * cellLength + (j * spacing.x)
+			#var cellY = i * cellLength + (i * spacing.y)
+			#
+			#cell.position = Vector2(cellX, cellY)
 	
 	var diceTypeFiles = DirAccess.open("res://resources/dice_data").get_files()
 	
@@ -243,25 +245,36 @@ func DrawDice():
 		
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
-		var targetCell: Control = diceLobbyNode.get_child(lobbyDiceNode.get_child_count())
+		#var targetCell: Control = diceLobbyNode.get_child(lobbyDiceNode.get_child_count())
 		
-		dice.visible = false
+		#dice.visible = false
 		
-		lobbyDiceNode.add_child(dice)
+		dice.custom_minimum_size = Vector2(32, 32)
+		
+		diceLobbyNode.add_child(dice)
 		
 		var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 		var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
 		
-		var targetPosition = targetCell.global_position + targetCell.pivot_offset
+		#var targetPosition = targetCell.global_position + targetCell.pivot_offset
 		
-		dice.global_position = startPosition
-		tween.tween_property(dice, "visible", true, 0)
-		tween.tween_property(dice, "global_position", targetPosition, drawDuration)
+		#dice.global_position = startPosition
+		#tween.tween_property(dice, "visible", true, 0)
+		#tween.tween_property(dice, "global_position", targetPosition, drawDuration)
 		
 	tween.tween_property(self, "controllable", true, 0)
 
 func DiscardDice():
-	pass
+	var tween = create_tween().set_parallel(true)
+	
+	var position: Vector2 = discardSectionControl.global_position
+	
+	tween.tween_property(selectedDice, "global_position", position, 0.3)
+	var targetDice = lobbyDiceNode.get_child(selectedDice.get_index())
+	lobbyDiceNode.remove_child(targetDice)
+	discadedDiceNode.add_child(targetDice)
+	SortDiceLobby()
+	
 
 func SortDiceLobby():
 	tween = get_tree().create_tween()
