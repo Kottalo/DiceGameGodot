@@ -243,10 +243,15 @@ func DrawDice():
 	
 	tween = get_tree().create_tween()
 	
+	var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
+	var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
+	
 	for i in range(drawPerTurn):
 		var randomIndex = randf_range(0, len(dicePool))
 		
 		var dice: Dice = dicePool.pop_at(randomIndex)
+		
+		slotDiceNode.add_child(dice)
 		
 		var cell = ColorRect.new()
 		
@@ -256,26 +261,27 @@ func DrawDice():
 		
 		cell.custom_minimum_size = Vector2(cellLength, cellLength)
 		
+		dice.size = cell.custom_minimum_size
+		
 		diceLobbyNode.add_child(cell)
 		
 		var targetCell: Control = diceLobbyNode.get_child(lobbyDiceNode.get_child_count())
 		
 		dice.visible = false
 		
-		var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
-		var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
-		
 		var targetPosition = targetCell.global_position + targetCell.pivot_offset
 		
-		#dice.global_position = startPosition
+		dice.global_position = startPosition
+		
 		tween.tween_property(dice, "visible", true, 0)
 		tween.tween_property(dice, "global_position", targetPosition, drawDuration)
 		
-		print(111)
-		
-		targetCell.add_child(dice)
+		tween.tween_callback(func (): print(111))
 		
 	tween.tween_property(self, "controllable", true, 0)
+
+func print2():
+	print(111)
 
 func DiscardDice():
 	var tween = create_tween().set_parallel(true)
