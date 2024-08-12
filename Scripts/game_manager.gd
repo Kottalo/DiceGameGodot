@@ -9,6 +9,7 @@ var diceNumberPerType: int = 8
 var dicePool: Array[Dice] = []
 var drawPerTurn: int = 5
 var diceSlots: Array[DiceSlot] = []
+var discardedDice: Array[Dice] = []
 
 var firstPlaced: bool
 var discardable: bool:
@@ -89,6 +90,7 @@ func _ready():
 				
 				diceSlots.append(childNode)
 	
+	# Generate dice slots
 	for diceSlot: DiceSlot in diceSlots:
 		var slotOffset = diceSlot.size / 2
 		var offset = diceSlotsNode.size / 2
@@ -257,6 +259,9 @@ func DrawDice():
 		tween.tween_property(dice, "global_position", targetPosition, drawDuration)
 		
 	tween.tween_property(self, "controllable", true, 0)
+
+func DiscardDice():
+	pass
 
 func SortDiceLobby():
 	tween = get_tree().create_tween()
