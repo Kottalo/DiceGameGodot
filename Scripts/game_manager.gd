@@ -1,5 +1,8 @@
 extends Node
 
+@export var diceLobbyColumn: int
+@export var drawPerTurn: int
+
 var slotInterval: float = 100
 var slotBoardSize: int = 2
 
@@ -7,7 +10,7 @@ var drawDuration: float = 0.3
 
 var diceNumberPerType: int = 8
 var dicePool: Array[Dice] = []
-var drawPerTurn: int = 5
+
 var diceSlots: Array[DiceSlot] = []
 
 var firstPlaced: bool
@@ -245,22 +248,32 @@ func DrawDice():
 		
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
-		#var targetCell: Control = diceLobbyNode.get_child(lobbyDiceNode.get_child_count())
+		var cell = ColorRect.new()
 		
-		#dice.visible = false
+		var totalHSeparation = (diceLobbyColumn - 1) * diceLobbyNode["theme_override_constants/h_separation"]
 		
-		dice.custom_minimum_size = Vector2(32, 32)
+		var cellLength: float = (diceLobbyNode.size.x - totalHSeparation) / diceLobbyColumn
 		
-		diceLobbyNode.add_child(dice)
+		cell.custom_minimum_size = Vector2(cellLength, cellLength)
+		
+		diceLobbyNode.add_child(cell)
+		
+		var targetCell: Control = diceLobbyNode.get_child(lobbyDiceNode.get_child_count())
+		
+		dice.visible = false
 		
 		var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 		var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
 		
-		#var targetPosition = targetCell.global_position + targetCell.pivot_offset
+		var targetPosition = targetCell.global_position + targetCell.pivot_offset
 		
 		#dice.global_position = startPosition
-		#tween.tween_property(dice, "visible", true, 0)
-		#tween.tween_property(dice, "global_position", targetPosition, drawDuration)
+		tween.tween_property(dice, "visible", true, 0)
+		tween.tween_property(dice, "global_position", targetPosition, drawDuration)
+		
+		print(111)
+		
+		targetCell.add_child(dice)
 		
 	tween.tween_property(self, "controllable", true, 0)
 

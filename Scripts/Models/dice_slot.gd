@@ -29,7 +29,7 @@ var centerPosition: Vector2:
 var occupiedBy: Dice = null:
 	set(newValue):
 		occupiedBy = newValue
-		print(connectedSlots)
+		
 		for slot in connectedSlots:
 			slot.placable = true
 	get:

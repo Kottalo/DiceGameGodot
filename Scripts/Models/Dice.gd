@@ -70,5 +70,4 @@ func _on_resized():
 	$Sprite2D.scale = Vector2(scaleX, scaleY)
 	$Sprite2D.position = offset
 	
-	print($Sprite2D.scale)
 	pass # Replace with function body.

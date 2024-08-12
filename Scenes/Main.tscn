@@ -19,6 +19,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qqv8m")
+diceLobbyColumn = 6
+drawPerTurn = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -235,6 +237,8 @@ theme_override_constants/margin_bottom = 10
 
 [node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"]
 layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
 
 [node name="DiceStatus" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
 layout_mode = 2
