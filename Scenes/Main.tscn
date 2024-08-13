@@ -363,8 +363,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridLayout" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection"]
+[node name="GridLayout" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection" node_paths=PackedStringArray("diceContainer")]
 layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+script = ExtResource("2_ulcfh")
+columnNum = 5
+diceContainer = NodePath("../../../../../../../Canvas/DiscardedDice")
 
 [node name="DiscardButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
 layout_mode = 2
