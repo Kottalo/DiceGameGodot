@@ -226,48 +226,6 @@ func _ready():
 	
 
 func DrawDice():
-	#controllable = false
-	#
-	#tween = create_tween()
-	#
-	#tween.pause()
-	#
-	#var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
-	#var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
-	#
-	#var hSeparation = 5
-	#var vSeparation = 5
-	#var totalHSeparation = (diceLobbyColumn - 1) * hSeparation
-	#var diceLength = (diceLobbyNode.size.x - totalHSeparation) / diceLobbyColumn
-	#var diceSize = Vector2(diceLength, diceLength)
-	#var diceOffset = diceSize / 2
-	#
-	#for i in range(drawPerTurn):
-		#var randomIndex = randf_range(0, len(dicePool))
-		#var dice: Dice = dicePool.pop_at(randomIndex)
-		#
-		#
-		#dice.visible = false
-		#dice.scale = diceSize / dice.get_rect().size
-		#dice.global_position = startPosition
-		#
-		#var diceCoordinateX: int = lobbyDiceNode.get_child_count() % diceLobbyColumn
-		#var diceCoordinateY: int = lobbyDiceNode.get_child_count() / diceLobbyColumn
-		#
-		#var position: Vector2 = Vector2(diceCoordinateX * diceSize.x, diceCoordinateY * diceSize.y)
-		#position += diceLobbyNode.global_position + diceOffset
-		#var spacingX = diceCoordinateX * hSeparation
-		#var spacingY = diceCoordinateY * vSeparation
-		#position += Vector2(spacingX, spacingY)
-		#tween.tween_property(dice, "visible", true, 0)
-		#tween.tween_property(dice, "global_position", position, drawDuration)
-		#
-		#lobbyDiceNode.add_child(dice)
-		#
-	#tween.play()
-		#
-	#tween.tween_property(self, "controllable", true, 0)
-	
 	var tween = create_tween()
 	
 	tween.pause()
@@ -278,6 +236,8 @@ func DrawDice():
 	
 	var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 	var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
+	
+	controllable = false
 	
 	for i in range(drawPerTurn):
 		var randomIndex = randf_range(0, len(dicePool))
@@ -294,7 +254,8 @@ func DrawDice():
 		tween.tween_property(dice, "global_position", position, drawDuration)
 	
 	tween.play()
-	pass
+	
+	tween.tween_property(self, "controllable", true, 0)
 
 func DiscardDice():
 	var tween = create_tween().set_parallel(true)
