@@ -11,6 +11,7 @@ script = ExtResource("2_lggg5")
 
 [node name="Line2D" type="Line2D" parent="."]
 visible = false
+z_index = 10
 points = PackedVector2Array(9, -9, 9, 9, -9, 9, -9, -9)
 closed = true
 width = 2.0
