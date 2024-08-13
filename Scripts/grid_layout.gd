@@ -1,5 +1,7 @@
 extends FlowContainer
 
+class_name GridLayout
+
 @export var columnNum: int
 
 var cellNum: int:

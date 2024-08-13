@@ -22,7 +22,7 @@ var discardable: bool:
 	get:
 		return discardable
 
-@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/GridContainer"
+@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/GridLayout"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
 @onready var discadedDiceNode: Node2D = $Canvas/DiscardedDice
