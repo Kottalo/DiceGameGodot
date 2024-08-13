@@ -22,7 +22,7 @@ var discardable: bool:
 	get:
 		return discardable
 
-@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/Container"
+@onready var diceLobbyNode: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/GridContainer"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
 @onready var discadedDiceNode: Node2D = $Canvas/DiscardedDice
@@ -226,47 +226,74 @@ func _ready():
 	
 
 func DrawDice():
-	controllable = false
+	#controllable = false
+	#
+	#tween = create_tween()
+	#
+	#tween.pause()
+	#
+	#var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
+	#var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
+	#
+	#var hSeparation = 5
+	#var vSeparation = 5
+	#var totalHSeparation = (diceLobbyColumn - 1) * hSeparation
+	#var diceLength = (diceLobbyNode.size.x - totalHSeparation) / diceLobbyColumn
+	#var diceSize = Vector2(diceLength, diceLength)
+	#var diceOffset = diceSize / 2
+	#
+	#for i in range(drawPerTurn):
+		#var randomIndex = randf_range(0, len(dicePool))
+		#var dice: Dice = dicePool.pop_at(randomIndex)
+		#
+		#
+		#dice.visible = false
+		#dice.scale = diceSize / dice.get_rect().size
+		#dice.global_position = startPosition
+		#
+		#var diceCoordinateX: int = lobbyDiceNode.get_child_count() % diceLobbyColumn
+		#var diceCoordinateY: int = lobbyDiceNode.get_child_count() / diceLobbyColumn
+		#
+		#var position: Vector2 = Vector2(diceCoordinateX * diceSize.x, diceCoordinateY * diceSize.y)
+		#position += diceLobbyNode.global_position + diceOffset
+		#var spacingX = diceCoordinateX * hSeparation
+		#var spacingY = diceCoordinateY * vSeparation
+		#position += Vector2(spacingX, spacingY)
+		#tween.tween_property(dice, "visible", true, 0)
+		#tween.tween_property(dice, "global_position", position, drawDuration)
+		#
+		#lobbyDiceNode.add_child(dice)
+		#
+	#tween.play()
+		#
+	#tween.tween_property(self, "controllable", true, 0)
 	
-	tween = create_tween()
+	var tween = create_tween()
 	
 	tween.pause()
 	
+	diceLobbyNode.GenerateGrid(drawPerTurn)
+	
+	await get_tree().process_frame
+	
 	var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 	var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
-	
-	var hSeparation = 5
-	var vSeparation = 5
-	var totalHSeparation = (diceLobbyColumn - 1) * hSeparation
-	var diceLength = (diceLobbyNode.size.x - totalHSeparation) / diceLobbyColumn
-	var diceSize = Vector2(diceLength, diceLength)
-	var diceOffset = diceSize / 2
 	
 	for i in range(drawPerTurn):
 		var randomIndex = randf_range(0, len(dicePool))
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
-		
-		dice.visible = false
-		dice.scale = diceSize / dice.get_rect().size
+		lobbyDiceNode.add_child(dice)
 		dice.global_position = startPosition
+		dice.visible = false
 		
-		var diceCoordinateX: int = lobbyDiceNode.get_child_count() % diceLobbyColumn
-		var diceCoordinateY: int = lobbyDiceNode.get_child_count() / diceLobbyColumn
+		var position: Vector2 = diceLobbyNode.GetCellPosition(dice.get_index())
 		
-		var position: Vector2 = Vector2(diceCoordinateX * diceSize.x, diceCoordinateY * diceSize.y)
-		position += diceLobbyNode.global_position + diceOffset
-		var spacingX = diceCoordinateX * hSeparation
-		var spacingY = diceCoordinateY * vSeparation
-		position += Vector2(spacingX, spacingY)
 		tween.tween_property(dice, "visible", true, 0)
 		tween.tween_property(dice, "global_position", position, drawDuration)
-		
-		lobbyDiceNode.add_child(dice)
-		
+	
 	tween.play()
-		
-	tween.tween_property(self, "controllable", true, 0)
+	pass
 
 func DiscardDice():
 	var tween = create_tween().set_parallel(true)

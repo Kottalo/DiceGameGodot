@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dshacjcd2weqc"]
+[gd_scene load_steps=6 format=3 uid="uid://dshacjcd2weqc"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_qqv8m"]
+[ext_resource type="Script" path="res://scripts/grid_container.gd" id="2_ulcfh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7y6cw"]
 font_size = 26
@@ -20,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qqv8m")
 diceLobbyColumn = 6
-drawPerTurn = 8
+drawPerTurn = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -235,8 +236,12 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Container" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"]
+[node name="GridContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"]
 layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+script = ExtResource("2_ulcfh")
+columnNum = 6
 
 [node name="DiceStatus" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
 layout_mode = 2
