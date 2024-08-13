@@ -236,12 +236,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridLayout" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby"]
+[node name="GridLayout" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby" node_paths=PackedStringArray("diceContainer")]
 layout_mode = 2
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 6
 script = ExtResource("2_ulcfh")
 columnNum = 6
+diceContainer = NodePath("../../../../../../../Canvas/LobbyDice")
 
 [node name="DiceStatus" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
 layout_mode = 2

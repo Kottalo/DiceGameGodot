@@ -4,6 +4,8 @@ class_name GridLayout
 
 @export var columnNum: int
 
+@export var diceContainer: Node2D
+
 var cellNum: int:
 	set(newValue):
 		cellNum = newValue
@@ -44,6 +46,20 @@ func GenerateGrid(cellNum: int):
 		cell.custom_minimum_size = cellSize
 		
 		add_child(cell)
+
+func SortGrid():
+	var tween = create_tween()
+	tween.pause()
+	
+	GenerateGrid(diceContainer.get_child_count())
+	
+	for i in range(2):
+		await get_tree().process_frame
+	
+	for index in range(diceContainer.get_child_count()):
+		tween.parallel().tween_property(diceContainer.get_child(index), "global_position", get_child(index).global_position + cellOffset, 0.2)
+	
+	tween.play()
 
 func GetCellPosition(cellIndex: int):
 	return get_child(cellIndex).global_position + cellOffset

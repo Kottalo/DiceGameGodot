@@ -257,27 +257,18 @@ func DrawDice():
 	
 	tween.tween_property(self, "controllable", true, 0)
 
-func DiscardDice():
-	var tween = create_tween().set_parallel(true)
-	
-	var position: Vector2 = discardSectionControl.global_position
-	
-	tween.tween_property(selectedDice, "global_position", position, 0.3)
-	var targetDice = lobbyDiceNode.get_child(selectedDice.get_index())
-	lobbyDiceNode.remove_child(targetDice)
-	discadedDiceNode.add_child(targetDice)
-	SortDiceLobby()
+#func DiscardDice():
+	#var tween = create_tween().set_parallel(true)
+	#
+	#var position: Vector2 = discardSectionControl.global_position
+	#
+	#tween.tween_property(selectedDice, "global_position", position, 0.3)
+	#var targetDice = lobbyDiceNode.get_child(selectedDice.get_index())
+	#lobbyDiceNode.remove_child(targetDice)
+	#discadedDiceNode.add_child(targetDice)
+	#SortDiceLobby()
 	
 
-func SortDiceLobby():
-	tween = get_tree().create_tween()
-	
-	for index in range(lobbyDiceNode.get_child_count()):
-		var offset = diceLobbyNode.get_child(index).size / 2
-		tween.parallel().tween_property(lobbyDiceNode.get_child(index), "global_position", diceLobbyNode.get_child(index).global_position + offset, 0.2)
-	
-	tween.play()
-	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
