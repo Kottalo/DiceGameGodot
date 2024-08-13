@@ -27,7 +27,7 @@ var discardable: bool:
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
 @onready var discadedDiceNode: Node2D = $Canvas/DiscardedDice
 @onready var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
-@onready var discardSectionControl = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection
+@onready var discardGridLayout = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/GridLayout
 
 @onready var tween: Tween
 
