@@ -261,8 +261,11 @@ func DiscardDice():
 	var targetDice = lobbyDiceNode.get_child(selectedDice.get_index())
 	lobbyDiceNode.remove_child(targetDice)
 	discardedDiceNode.add_child(targetDice)
+	diceLobbyGridLayout.SortGrid()
 	discardGridLayout.GenerateGrid(discardedDiceNode.get_child_count())
 	discardGridLayout.SortGrid()
+	selectedDice.selectable = false
+	selectedDice = null
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

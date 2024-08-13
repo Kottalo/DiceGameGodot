@@ -69,7 +69,7 @@ func _gui_input(event):
 				
 				print(Main.lobbyDiceNode.get_child_count())
 				
-				Main.diceLobbyNode.SortGrid()
+				Main.diceLobbyGridLayout.SortGrid()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
