@@ -2,6 +2,14 @@ extends FlowContainer
 
 @export var columnNum: int
 
+var cellNum: int:
+	set(newValue):
+		cellNum = newValue
+		
+		GenerateGrid(cellNum)
+	get:
+		return cellNum
+
 var cellSize: Vector2:
 	get:
 		var hSeparation = self["theme_override_constants/h_separation"]
@@ -11,6 +19,10 @@ var cellSize: Vector2:
 		var diceLength = (size.x - totalHSeparation) / columnNum
 		
 		return Vector2(diceLength, diceLength)
+
+var cellOffset: Vector2:
+	get:
+		return cellSize / 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,11 +37,11 @@ func GenerateGrid(cellNum: int):
 		remove_child(child)
 	
 	for i in range(cellNum):
-		var cell = ColorRect.new()
+		var cell = Control.new()
 		
 		cell.custom_minimum_size = cellSize
 		
 		add_child(cell)
 
 func GetCellPosition(cellIndex: int):
-	return get_child(cellIndex).global_position
+	return get_child(cellIndex).global_position + cellOffset

@@ -272,7 +272,7 @@ func DrawDice():
 	
 	tween.pause()
 	
-	diceLobbyNode.GenerateGrid(drawPerTurn)
+	diceLobbyNode.cellNum = 6
 	
 	await get_tree().process_frame
 	
@@ -284,6 +284,7 @@ func DrawDice():
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
 		lobbyDiceNode.add_child(dice)
+		dice.scale = diceLobbyNode.cellSize / dice.get_rect().size
 		dice.global_position = startPosition
 		dice.visible = false
 		
