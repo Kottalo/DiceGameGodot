@@ -434,10 +434,12 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
 
-[node name="Section4" type="Control" parent="HBoxContainer/RightPanel/VBoxContainer"]
+[node name="PlayHandButton" type="Button" parent="HBoxContainer/RightPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
+theme_override_font_sizes/font_size = 18
+text = "Play Hand"
 
 [node name="Canvas" type="Node2D" parent="."]
 
@@ -452,3 +454,5 @@ size_flags_stretch_ratio = 0.15
 [node name="SlotDice" type="Node2D" parent="Canvas"]
 
 [connection signal="pressed" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton" to="." method="DiscardDice"]
+[connection signal="child_entered_tree" from="Canvas/LobbyDice" to="." method="_on_lobbyDiceNode_child_changed"]
+[connection signal="child_exiting_tree" from="Canvas/LobbyDice" to="." method="_on_lobbyDiceNode_child_changed"]

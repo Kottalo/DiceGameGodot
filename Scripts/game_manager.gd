@@ -28,6 +28,7 @@ var discardable: bool:
 @onready var discardedDiceNode: Node2D = $Canvas/DiscardedDice
 @onready var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
 @onready var discardGridLayout = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/GridLayout
+@onready var playHandButton = $HBoxContainer/RightPanel/VBoxContainer/PlayHandButton
 
 @onready var tween: Tween
 
@@ -47,6 +48,15 @@ var controllable: bool:
 		controllable = newValue
 	get:
 		return controllable
+
+var handPlayable: bool:
+	set(newValue):
+		handPlayable = newValue
+		
+		playHandButton.disabled = !handPlayable
+	get:
+		return handPlayable
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -276,3 +286,7 @@ func _process(delta):
 func _on_window_resized():
 	pass
 	
+func _on_lobbyDiceNode_child_changed(node):
+	await get_tree().process_frame
+	
+	handPlayable = lobbyDiceNode.get_child_count() == 0
