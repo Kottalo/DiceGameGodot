@@ -1,8 +1,16 @@
 extends Node
 
+var list = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(1/3)
+	var a = ColorRect.new()
+	a.custom_minimum_size = Vector2(100, 100)
+	list.append(a)
+	
+	$Control/FlowContainer.add_child(a)
+	
+	list[0].custom_minimum_size = Vector2(10, 100)
 	pass # Replace with function body.
 
 

@@ -454,5 +454,6 @@ text = "Play Hand"
 [node name="SlotDice" type="Node2D" parent="Canvas"]
 
 [connection signal="pressed" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton" to="." method="DiscardDice"]
+[connection signal="pressed" from="HBoxContainer/RightPanel/VBoxContainer/PlayHandButton" to="." method="_on_PlayHandButton_pressed"]
 [connection signal="child_entered_tree" from="Canvas/LobbyDice" to="." method="_on_lobbyDiceNode_child_changed"]
 [connection signal="child_exiting_tree" from="Canvas/LobbyDice" to="." method="_on_lobbyDiceNode_child_changed"]

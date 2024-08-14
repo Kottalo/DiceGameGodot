@@ -10,6 +10,7 @@ var drawDuration: float = 0.3
 
 var diceNumberPerType: int = 8
 var dicePool: Array[Dice] = []
+var diceGraveyard: Array[Dice] = []
 
 var diceSlots: Array[DiceSlot] = []
 
@@ -29,6 +30,8 @@ var discardable: bool:
 @onready var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
 @onready var discardGridLayout = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/GridLayout
 @onready var playHandButton = $HBoxContainer/RightPanel/VBoxContainer/PlayHandButton
+@onready var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
+@onready var diceGraveyardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/GraveyardButton
 
 @onready var tween: Tween
 
@@ -244,7 +247,6 @@ func DrawDice():
 	
 	await get_tree().process_frame
 	
-	var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 	var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
 	
 	controllable = false
@@ -290,3 +292,26 @@ func _on_lobbyDiceNode_child_changed(node):
 	await get_tree().process_frame
 	
 	handPlayable = lobbyDiceNode.get_child_count() == 0
+
+
+func _on_PlayHandButton_pressed():
+	var tween = create_tween()
+	tween.pause()
+	
+	var diceGraveyardPosition = diceGraveyardButton.global_position + (diceGraveyardButton.size / 2)
+	
+	for dice in discardedDiceNode.get_children():
+		tween.tween_property(dice, "global_position", diceGraveyardPosition, 0.3)
+		tween.tween_callback(
+			func():
+				diceGraveyard.append(dice)
+				discardedDiceNode.remove_child(dice)
+		)
+		
+	tween.play()
+	
+	await tween.finished
+	
+	DrawDice()
+	
+	pass # Replace with function body.
