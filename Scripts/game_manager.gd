@@ -295,22 +295,23 @@ func _on_lobbyDiceNode_child_changed(node):
 
 
 func _on_PlayHandButton_pressed():
-	var tween = create_tween()
-	tween.pause()
-	
-	var diceGraveyardPosition = diceGraveyardButton.global_position + (diceGraveyardButton.size / 2)
-	
-	for dice in discardedDiceNode.get_children():
-		tween.tween_property(dice, "global_position", diceGraveyardPosition, 0.3)
-		tween.tween_callback(
-			func():
-				diceGraveyard.append(dice)
-				discardedDiceNode.remove_child(dice)
-		)
+	if discardedDiceNode.get_child_count() > 0:
+		var tween = create_tween()
+		tween.pause()
 		
-	tween.play()
-	
-	await tween.finished
+		var diceGraveyardPosition = diceGraveyardButton.global_position + (diceGraveyardButton.size / 2)
+		
+		for dice in discardedDiceNode.get_children():
+			tween.tween_property(dice, "global_position", diceGraveyardPosition, 0.3)
+			tween.tween_callback(
+				func():
+					diceGraveyard.append(dice)
+					discardedDiceNode.remove_child(dice)
+			)
+			
+		tween.play()
+		
+		await tween.finished
 	
 	DrawDice()
 	
