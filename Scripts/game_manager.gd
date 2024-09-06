@@ -25,7 +25,7 @@ var discardable: bool:
 	get:
 		return discardable
 
-@onready var diceLobbyGridLayout: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/GridLayout"
+@onready var diceLobbyGridLayout: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/DiceContainer"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
 @onready var discardedDiceNode: Node2D = $Canvas/DiscardedDice
@@ -43,8 +43,6 @@ var selectedDice: Dice = null:
 		
 		if selectedDice != null:
 			selectedDice.selected = true
-		
-		discardable = selectedDice != null
 	get:
 		return selectedDice
 
@@ -319,4 +317,14 @@ func _on_PlayHandButton_pressed():
 	
 	DrawDice()
 	
+	pass # Replace with function body.
+
+func _on_discarded_dice_child_entered_tree(node):
+	await get_tree().process_frame
+	discardable = discardedDiceNode.get_child_count() > 0
+	pass # Replace with function body.
+
+func _on_discarded_dice_child_exiting_tree(node):
+	await get_tree().process_frame
+	discardable = discardedDiceNode.get_child_count() > 0
 	pass # Replace with function body.

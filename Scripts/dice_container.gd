@@ -47,9 +47,9 @@ func GenerateGrid():
 		flowContainer.remove_child(child)
 	
 	for i in range(diceContainer.get_child_count()):
-		var cell = ColorRect.new()
+		var cell = Control.new()
 		
-		cell.color = Color.BEIGE
+		#cell.color = Color.BEIGE
 		
 		cell.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.custom_minimum_size = cellSize

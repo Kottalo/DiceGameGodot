@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dshacjcd2weqc"]
+[gd_scene load_steps=6 format=3 uid="uid://dshacjcd2weqc"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_qqv8m"]
-[ext_resource type="Script" path="res://scripts/grid_layout.gd" id="2_ulcfh"]
-[ext_resource type="Script" path="res://scripts/dice_container.gd" id="3_wrk0y"]
+[ext_resource type="PackedScene" uid="uid://mpiajfrjwyhl" path="res://models/dice_container.tscn" id="3_5m80x"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7y6cw"]
 font_size = 26
@@ -12,8 +11,6 @@ font_size = 31
 
 [sub_resource type="LabelSettings" id="LabelSettings_qvupo"]
 font_size = 20
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy3ey"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -102,14 +99,12 @@ mouse_filter = 2
 [node name="GraveyardButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Graveyard"
 
 [node name="DicePoolButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Dice Pool"
 
@@ -263,13 +258,8 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridLayout" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby" node_paths=PackedStringArray("diceContainer")]
+[node name="DiceContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby" node_paths=PackedStringArray("diceContainer") instance=ExtResource("3_5m80x")]
 layout_mode = 2
-mouse_filter = 2
-theme_override_constants/h_separation = 6
-theme_override_constants/v_separation = 6
-script = ExtResource("2_ulcfh")
-columnNum = 6
 diceContainer = NodePath("../../../../../../../Canvas/LobbyDice")
 
 [node name="DiceStatus" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
@@ -404,35 +394,14 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 mouse_filter = 2
 
-[node name="DiceContainer" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection" node_paths=PackedStringArray("flowContainer", "diceContainer")]
+[node name="DiceContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection" node_paths=PackedStringArray("diceContainer") instance=ExtResource("3_5m80x")]
 layout_mode = 2
-mouse_filter = 2
-script = ExtResource("3_wrk0y")
-columnNum = 6
-flowContainer = NodePath("FlowContainer")
 diceContainer = NodePath("../../../../../../../Canvas/DiscardedDice")
-
-[node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/h_separation = 6
-theme_override_constants/v_separation = 6
-
-[node name="Area2D" type="Area2D" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer/Area2D"]
-shape = SubResource("RectangleShape2D_vy3ey")
 
 [node name="DiscardButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Discard"
 
@@ -506,7 +475,6 @@ mouse_filter = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
-mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Play Hand"
 
@@ -522,7 +490,10 @@ text = "Play Hand"
 
 [node name="SlotDice" type="Node2D" parent="Canvas"]
 
-[connection signal="mouse_entered" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer/Area2D" to="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer" method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer/Area2D" to="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer" method="_on_area_2d_mouse_exited"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton" to="." method="DiscardDice"]
 [connection signal="pressed" from="HBoxContainer/RightPanel/VBoxContainer/PlayHandButton" to="." method="_on_PlayHandButton_pressed"]
+[connection signal="child_entered_tree" from="Canvas/DiscardedDice" to="." method="_on_discarded_dice_child_entered_tree"]
+[connection signal="child_exiting_tree" from="Canvas/DiscardedDice" to="." method="_on_discarded_dice_child_exiting_tree"]
+
+[editable path="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/DiceContainer"]
+[editable path="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer"]
