@@ -1,28 +1,25 @@
-extends FlowContainer
+extends Control
 
-class_name GridLayout
+class_name DiceContainer
 
 @onready var Main = get_node("/root/Main")
 
 @export var columnNum: int
 
+@export var flowContainer: FlowContainer
 @export var diceContainer: Node2D
 
 var cellNum: int:
-	set(newValue):
-		cellNum = newValue
-		
-		GenerateGrid(cellNum)
 	get:
-		return cellNum
+		return diceContainer.get_child_count()
 
 var cellSize: Vector2:
 	get:
-		var hSeparation = self["theme_override_constants/h_separation"]
-		var vSeparation = self["theme_override_constants/v_separation"]
+		var hSeparation = flowContainer["theme_override_constants/h_separation"]
+		var vSeparation = flowContainer["theme_override_constants/v_separation"]
 		
 		var totalHSeparation = (columnNum - 1) * hSeparation
-		var diceLength = (size.x - totalHSeparation) / columnNum
+		var diceLength = (flowContainer.size.x - totalHSeparation) / columnNum
 		
 		return Vector2(diceLength, diceLength)
 
@@ -32,8 +29,12 @@ var cellOffset: Vector2:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#connect("child_entered_tree", SortGrid)
-	#connect("child_exiting_tree", SortGrid)
+	await get_tree().process_frame
+	
+	var collisionShape = $Area2D/CollisionShape2D as CollisionShape2D
+	
+	collisionShape.shape.size = get_rect().size
+	collisionShape.position = get_rect().size / 2
 	
 	pass # Replace with function body.
 
@@ -41,36 +42,40 @@ func _ready():
 func _process(delta):
 	pass
 
-func GenerateGrid(cellNum: int):
-	for child in get_children():
-		remove_child(child)
+func GenerateGrid():
+	for child in flowContainer.get_children():
+		flowContainer.remove_child(child)
 	
-	for i in range(cellNum):
-		var cell = Control.new()
+	for i in range(diceContainer.get_child_count()):
+		var cell = ColorRect.new()
+		
+		cell.color = Color.BEIGE
 		
 		cell.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.custom_minimum_size = cellSize
 		
-		add_child(cell)
+		print(cellSize)
+		
+		flowContainer.add_child(cell)
 
 func SortGrid() -> Tween:
 	var tween = create_tween()
 	tween.pause()
 	
-	GenerateGrid(diceContainer.get_child_count())
+	GenerateGrid()
 	
 	for i in range(2):
 		await get_tree().process_frame
 	
 	for index in range(diceContainer.get_child_count()):
-		tween.parallel().tween_property(diceContainer.get_child(index), "global_position", get_child(index).global_position + cellOffset, 0.2)
+		tween.parallel().tween_property(diceContainer.get_child(index), "global_position", flowContainer.get_child(index).global_position + cellOffset, 0.2)
 	
 	tween.play()
 	
 	return tween
 
 func GetCellPosition(cellIndex: int):
-	return get_child(cellIndex).global_position + cellOffset
+	return flowContainer.get_child(cellIndex).global_position + cellOffset
 
 func JoinDice(dice: Dice):
 	var diceParent : Node2D = dice.get_parent()

@@ -1,22 +1,36 @@
-[gd_scene load_steps=2 format=3 uid="uid://cumixjmvn3m3j"]
+[gd_scene load_steps=5 format=3 uid="uid://cumixjmvn3m3j"]
 
 [ext_resource type="Script" path="res://scripts/test.gd" id="1_uejhm"]
+[ext_resource type="Script" path="res://scripts/test_node.gd" id="2_rf5w1"]
+[ext_resource type="PackedScene" uid="uid://f2fe1hynbux5" path="res://models/dice.tscn" id="3_ri633"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhlx8"]
+size = Vector2(167, 103)
 
 [node name="Test" type="Node"]
 script = ExtResource("1_uejhm")
 
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Child" type="Node2D" parent="Node2D"]
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("2_rf5w1")
+
+[node name="Area2D" type="Area2D" parent="Node2D2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D2/Area2D"]
+position = Vector2(114, 80)
+shape = SubResource("RectangleShape2D_dhlx8")
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 265.0
+offset_bottom = 172.0
+mouse_filter = 2
 
-[node name="FlowContainer" type="FlowContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Dice" parent="Control" instance=ExtResource("3_ri633")]
+position = Vector2(55, 149)
+
+[connection signal="mouse_entered" from="Node2D2/Area2D" to="Node2D2" method="_on_area_2d_mouse_entered"]

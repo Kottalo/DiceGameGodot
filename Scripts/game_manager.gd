@@ -14,6 +14,8 @@ var diceGraveyard: Array[Dice] = []
 
 var diceSlots: Array[DiceSlot] = []
 
+var targetContainer = null
+
 var firstPlaced: bool
 var discardable: bool:
 	set(newValue):
@@ -28,7 +30,7 @@ var discardable: bool:
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
 @onready var discardedDiceNode: Node2D = $Canvas/DiscardedDice
 @onready var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
-@onready var discardGridLayout = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/GridLayout
+@onready var discardGridLayout = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer
 @onready var playHandButton = $HBoxContainer/RightPanel/VBoxContainer/PlayHandButton
 @onready var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 @onready var diceGraveyardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/GraveyardButton
@@ -258,12 +260,14 @@ func DrawDice():
 		lobbyDiceNode.add_child(dice)
 		dice.scale = diceLobbyGridLayout.cellSize / dice.get_rect().size
 		dice.global_position = startPosition
-		dice.visible = false
 		
-		var position: Vector2 = diceLobbyGridLayout.GetCellPosition(dice.get_index())
-		
-		tween.tween_property(dice, "visible", true, 0)
-		tween.tween_property(dice, "global_position", position, drawDuration)
+		diceLobbyGridLayout.JoinDice(dice)
+		#dice.visible = false
+		#
+		#var position: Vector2 = diceLobbyGridLayout.GetCellPosition(dice.get_index())
+		#
+		#tween.tween_property(dice, "visible", true, 0)
+		#tween.tween_property(dice, "global_position", position, drawDuration)
 	
 	tween.play()
 	
@@ -273,7 +277,7 @@ func DiscardDice():
 	var targetDice = lobbyDiceNode.get_child(selectedDice.get_index())
 	lobbyDiceNode.remove_child(targetDice)
 	discardedDiceNode.add_child(targetDice)
-	diceLobbyGridLayout.SortGrid()
+	#diceLobbyGridLayout.SortGrid()
 	discardGridLayout.GenerateGrid(discardedDiceNode.get_child_count())
 	discardGridLayout.SortGrid()
 	selectedDice.selectable = false
@@ -288,10 +292,10 @@ func _process(delta):
 func _on_window_resized():
 	pass
 	
-func _on_lobbyDiceNode_child_changed(node):
-	await get_tree().process_frame
-	
-	handPlayable = lobbyDiceNode.get_child_count() == 0
+#func _on_lobbyDiceNode_child_changed(node):
+	#await get_tree().process_frame
+	#
+	#handPlayable = lobbyDiceNode.get_child_count() == 0
 
 
 func _on_PlayHandButton_pressed():

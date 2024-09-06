@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dshacjcd2weqc"]
+[gd_scene load_steps=8 format=3 uid="uid://dshacjcd2weqc"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_qqv8m"]
 [ext_resource type="Script" path="res://scripts/grid_layout.gd" id="2_ulcfh"]
+[ext_resource type="Script" path="res://scripts/dice_container.gd" id="3_wrk0y"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7y6cw"]
 font_size = 26
@@ -12,6 +13,8 @@ font_size = 31
 [sub_resource type="LabelSettings" id="LabelSettings_qvupo"]
 font_size = 20
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy3ey"]
+
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -19,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_qqv8m")
 diceLobbyColumn = 6
 drawPerTurn = 6
@@ -30,11 +34,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="LeftPanel" type="Control" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel"]
 layout_mode = 1
@@ -43,11 +49,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Section1" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section1"]
 layout_mode = 1
@@ -65,6 +73,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2"]
 layout_mode = 1
@@ -73,11 +82,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Left" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left"]
 layout_mode = 1
@@ -86,16 +97,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="GraveyardButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Graveyard"
 
 [node name="DicePoolButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Dice Pool"
 
@@ -103,6 +117,7 @@ text = "Dice Pool"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.7
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right"]
 layout_mode = 1
@@ -111,11 +126,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Upper" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Upper"]
 layout_mode = 1
@@ -124,6 +141,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ScoreToBeatLabel" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Upper/VBoxContainer"]
 layout_mode = 2
@@ -146,6 +164,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Lower"]
 layout_mode = 1
@@ -154,10 +173,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Left" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Lower/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Lower/HBoxContainer/Left"]
 layout_mode = 1
@@ -166,6 +187,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="BaseScoreLabel" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Lower/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
@@ -187,6 +209,7 @@ vertical_alignment = 1
 [node name="Right" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Lower/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Lower/HBoxContainer/Right"]
 layout_mode = 1
@@ -195,6 +218,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="MultiplierLabel" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Right/VBoxContainer/Lower/HBoxContainer/Right/VBoxContainer"]
 layout_mode = 2
@@ -218,6 +242,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.45
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4"]
 layout_mode = 1
@@ -226,11 +251,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="DiceLobby" type="MarginContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
+mouse_filter = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -238,6 +265,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="GridLayout" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby" node_paths=PackedStringArray("diceContainer")]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 6
 script = ExtResource("2_ulcfh")
@@ -248,6 +276,7 @@ diceContainer = NodePath("../../../../../../../Canvas/LobbyDice")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus"]
 layout_mode = 1
@@ -256,10 +285,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="DrawPerTurnLabel" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -281,6 +312,7 @@ vertical_alignment = 1
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="DiceRemainLabel" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer/VBoxContainer2"]
 layout_mode = 2
@@ -302,6 +334,7 @@ vertical_alignment = 1
 [node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="DrawLabel" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
@@ -323,6 +356,7 @@ vertical_alignment = 1
 [node name="VBoxContainer4" type="VBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="DiscardLabel" type="Label" parent="HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceStatus/VBoxContainer/VBoxContainer4"]
 layout_mode = 2
@@ -345,6 +379,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5"]
 layout_mode = 1
@@ -353,28 +388,51 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="DiscardSection" type="MarginContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
+mouse_filter = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridLayout" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection" node_paths=PackedStringArray("diceContainer")]
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection"]
 layout_mode = 2
+mouse_filter = 2
+
+[node name="DiceContainer" type="Control" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection" node_paths=PackedStringArray("flowContainer", "diceContainer")]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_wrk0y")
+columnNum = 6
+flowContainer = NodePath("FlowContainer")
+diceContainer = NodePath("../../../../../../../Canvas/DiscardedDice")
+
+[node name="FlowContainer" type="FlowContainer" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 6
-script = ExtResource("2_ulcfh")
-columnNum = 5
-diceContainer = NodePath("../../../../../../../Canvas/DiscardedDice")
+
+[node name="Area2D" type="Area2D" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer/Area2D"]
+shape = SubResource("RectangleShape2D_vy3ey")
 
 [node name="DiscardButton" type="Button" parent="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Discard"
 
@@ -382,6 +440,7 @@ text = "Discard"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MidPanel"]
 layout_mode = 1
@@ -390,26 +449,31 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Section1" type="Control" parent="HBoxContainer/MidPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
+mouse_filter = 2
 
 [node name="Section2" type="Control" parent="HBoxContainer/MidPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
+mouse_filter = 2
 
 [node name="DiceSlots" type="Control" parent="HBoxContainer/MidPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
+mouse_filter = 2
 
 [node name="RightPanel" type="Control" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.15
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/RightPanel"]
 layout_mode = 1
@@ -418,26 +482,31 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Section1" type="Control" parent="HBoxContainer/RightPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
+mouse_filter = 2
 
 [node name="Section2" type="Control" parent="HBoxContainer/RightPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
+mouse_filter = 2
 
 [node name="Section3" type="Control" parent="HBoxContainer/RightPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
+mouse_filter = 2
 
 [node name="PlayHandButton" type="Button" parent="HBoxContainer/RightPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
+mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 text = "Play Hand"
 
@@ -453,7 +522,7 @@ text = "Play Hand"
 
 [node name="SlotDice" type="Node2D" parent="Canvas"]
 
+[connection signal="mouse_entered" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer/Area2D" to="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer/Area2D" to="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer" method="_on_area_2d_mouse_exited"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton" to="." method="DiscardDice"]
 [connection signal="pressed" from="HBoxContainer/RightPanel/VBoxContainer/PlayHandButton" to="." method="_on_PlayHandButton_pressed"]
-[connection signal="child_entered_tree" from="Canvas/LobbyDice" to="." method="_on_lobbyDiceNode_child_changed"]
-[connection signal="child_exiting_tree" from="Canvas/LobbyDice" to="." method="_on_lobbyDiceNode_child_changed"]
