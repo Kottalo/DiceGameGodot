@@ -243,8 +243,6 @@ func DrawDice():
 	
 	tween.pause()
 	
-	diceLobbyDiceContainer.cellNum = 6
-	
 	await get_tree().process_frame
 	
 	var startPosition = dicePoolButton.global_position + (dicePoolButton.size / 2)
@@ -266,7 +264,17 @@ func DrawDice():
 	tween.tween_property(self, "controllable", true, 0)
 
 func DiscardDice():
-	#for dice: Dice in discardDiceContainer
+	var diceContainer: Node2D = discardDiceContainer.diceContainer
+	
+	var totalDiceCount: int = diceContainer.get_child_count()
+	
+	for i in range(totalDiceCount - 1, -1, -1):
+		var dice: Dice = diceContainer.get_child(i)
+		
+		diceGraveyard.append(dice)
+		print(diceGraveyard)
+		diceContainer.remove_child(dice)
+		
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

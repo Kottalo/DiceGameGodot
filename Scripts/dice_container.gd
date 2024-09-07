@@ -84,7 +84,7 @@ func JoinDice(dice: Dice):
 	var sortGrid = await SortGrid()
 	
 	await sortGrid.finished
-	
+
 
 func _on_area_2d_mouse_entered():
 	Main.targetContainer = self
