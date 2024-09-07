@@ -25,12 +25,12 @@ var discardable: bool:
 	get:
 		return discardable
 
-@onready var diceLobbyGridLayout: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/DiceContainer"
+@onready var diceLobbyDiceContainer: Control = $"HBoxContainer/LeftPanel/VBoxContainer/Section4/HBoxContainer/DiceLobby/DiceContainer"
 @onready var lobbyDiceNode: Node2D = $Canvas/LobbyDice
 @onready var slotDiceNode: Node2D = $Canvas/SlotDice
 @onready var discardedDiceNode: Node2D = $Canvas/DiscardedDice
 @onready var discardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardButton
-@onready var discardGridLayout = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer
+@onready var discardDiceContainer = $HBoxContainer/LeftPanel/VBoxContainer/Section5/HBoxContainer/DiscardSection/DiceContainer
 @onready var playHandButton = $HBoxContainer/RightPanel/VBoxContainer/PlayHandButton
 @onready var dicePoolButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/DicePoolButton
 @onready var diceGraveyardButton = $HBoxContainer/LeftPanel/VBoxContainer/Section2/HBoxContainer/Left/VBoxContainer/GraveyardButton
@@ -208,8 +208,8 @@ func _ready():
 	var gridSize = Vector2(8, 4)
 	var spacing = Vector2(10, 10)
 	
-	var dividedSizeX = ( diceLobbyGridLayout.size.x - (spacing.x * (gridSize.x - 1)) ) / gridSize.x
-	var dividedSizeY = ( diceLobbyGridLayout.size.y - (spacing.y * (gridSize.y - 1)) ) / gridSize.y
+	var dividedSizeX = ( diceLobbyDiceContainer.size.x - (spacing.x * (gridSize.x - 1)) ) / gridSize.x
+	var dividedSizeY = ( diceLobbyDiceContainer.size.y - (spacing.y * (gridSize.y - 1)) ) / gridSize.y
 	
 	var cellLength = min(dividedSizeX, dividedSizeY)
 	
@@ -243,7 +243,7 @@ func DrawDice():
 	
 	tween.pause()
 	
-	diceLobbyGridLayout.cellNum = 6
+	diceLobbyDiceContainer.cellNum = 6
 	
 	await get_tree().process_frame
 	
@@ -256,30 +256,18 @@ func DrawDice():
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
 		lobbyDiceNode.add_child(dice)
-		dice.scale = diceLobbyGridLayout.cellSize / dice.get_rect().size
+		dice.scale = diceLobbyDiceContainer.cellSize / dice.get_rect().size
 		dice.global_position = startPosition
 		
-		diceLobbyGridLayout.JoinDice(dice)
-		#dice.visible = false
-		#
-		#var position: Vector2 = diceLobbyGridLayout.GetCellPosition(dice.get_index())
-		#
-		#tween.tween_property(dice, "visible", true, 0)
-		#tween.tween_property(dice, "global_position", position, drawDuration)
+		diceLobbyDiceContainer.JoinDice(dice)
 	
 	tween.play()
 	
 	tween.tween_property(self, "controllable", true, 0)
 
 func DiscardDice():
-	var targetDice = lobbyDiceNode.get_child(selectedDice.get_index())
-	lobbyDiceNode.remove_child(targetDice)
-	discardedDiceNode.add_child(targetDice)
-	#diceLobbyGridLayout.SortGrid()
-	discardGridLayout.GenerateGrid(discardedDiceNode.get_child_count())
-	discardGridLayout.SortGrid()
-	selectedDice.selectable = false
-	selectedDice = null
+	#for dice: Dice in discardDiceContainer
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

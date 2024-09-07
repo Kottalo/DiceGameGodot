@@ -82,7 +82,7 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 		if Main.targetContainer != null:
 			Main.targetContainer.JoinDice(self)
 		else:
-			Main.diceLobbyGridLayout.JoinDice(self)
+			Main.diceLobbyDiceContainer.JoinDice(self)
 	
 	#if event.is_action_released("click"):
 		#print("Released")
