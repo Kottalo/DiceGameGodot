@@ -54,8 +54,6 @@ func GenerateGrid():
 		cell.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.custom_minimum_size = cellSize
 		
-		print(cellSize)
-		
 		flowContainer.add_child(cell)
 
 func SortGrid() -> Tween:
