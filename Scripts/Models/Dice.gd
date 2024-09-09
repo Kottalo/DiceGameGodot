@@ -83,6 +83,8 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 			Main.targetContainer.JoinDice(self)
 		else:
 			Main.diceLobbyDiceContainer.JoinDice(self)
+		
+		Main.updatePlayable()
 	
 	#if event.is_action_released("click"):
 		#print("Released")

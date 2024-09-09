@@ -293,6 +293,8 @@ func _on_window_resized():
 
 
 func _on_PlayHandButton_pressed():
+	handPlayable = false
+	
 	if discardedDiceNode.get_child_count() > 0:
 		var tween = create_tween()
 		tween.pause()
@@ -310,7 +312,7 @@ func _on_PlayHandButton_pressed():
 		tween.play()
 		
 		await tween.finished
-	
+		
 	DrawDice()
 	
 	pass # Replace with function body.
@@ -324,3 +326,9 @@ func _on_discarded_dice_child_exiting_tree(node):
 	await get_tree().process_frame
 	discardable = discardedDiceNode.get_child_count() > 0
 	pass # Replace with function body.
+
+func updatePlayable():
+	var childCount = $Canvas/LobbyDice.get_child_count()
+	
+	handPlayable = childCount == 0
+	print("Child count %s" % childCount)
