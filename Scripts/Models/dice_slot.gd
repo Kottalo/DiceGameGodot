@@ -39,6 +39,11 @@ var connectedSlots: Array[DiceSlot] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var collisionShape = $Area2D/CollisionShape2D as CollisionShape2D
+	
+	collisionShape.shape.size = get_rect().size
+	collisionShape.position = get_rect().size / 2
+	
 	pass # Replace with function body.
 
 func _gui_input(event):
@@ -80,3 +85,15 @@ func _set(property, value):
 
 func UpdateOffset():
 	pivot_offset = size / 2
+
+
+func _on_area_2d_area_entered(area):
+	Main.targetContainer = self
+	print("Slot entered")
+	pass # Replace with function body.
+
+
+func _on_area_2d_area_exited(area):
+	Main.targetContainer = null
+	print("Slot exited")
+	pass # Replace with function body.
