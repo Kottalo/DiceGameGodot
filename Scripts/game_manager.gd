@@ -8,7 +8,7 @@ var slotBoardSize: int = 2
 
 var drawDuration: float = 0.3
 
-var diceNumberPerType: int = 8
+var diceNumberPerType: int = 2
 var dicePool: Array[Dice] = []
 var diceGraveyard: Array[Dice] = []
 
@@ -253,6 +253,9 @@ func DrawDice(drawNum: int):
 		var randomIndex = randf_range(0, len(dicePool))
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
+		if len(dicePool) == 0:
+			ReplenishDice()
+		
 		lobbyDiceNode.add_child(dice)
 		dice.scale = diceLobbyDiceContainer.cellSize / dice.get_rect().size
 		dice.global_position = startPosition
@@ -279,6 +282,13 @@ func DiscardDice():
 	
 	pass
 
+func ReplenishDice():
+	for i in range(len(diceGraveyard)):
+		var dice = diceGraveyard.pop_back()
+		
+		dice.Roll()
+		
+		dicePool.append(dice)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
