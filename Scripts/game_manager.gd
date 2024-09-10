@@ -233,12 +233,12 @@ func _ready():
 			
 			dicePool.append(dice)
 	
-	DrawDice()
+	DrawDice(drawPerTurn)
 	
 	pass # Replace with function body.
 	
 
-func DrawDice():
+func DrawDice(drawNum: int):
 	var tween = create_tween()
 	
 	tween.pause()
@@ -249,7 +249,7 @@ func DrawDice():
 	
 	controllable = false
 	
-	for i in range(drawPerTurn):
+	for i in range(drawNum):
 		var randomIndex = randf_range(0, len(dicePool))
 		var dice: Dice = dicePool.pop_at(randomIndex)
 		
@@ -274,7 +274,9 @@ func DiscardDice():
 		diceGraveyard.append(dice)
 		print(diceGraveyard)
 		diceContainer.remove_child(dice)
-		
+	
+	DrawDice(totalDiceCount)
+	
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -313,7 +315,7 @@ func _on_PlayHandButton_pressed():
 		
 		await tween.finished
 		
-	DrawDice()
+	DrawDice(drawPerTurn)
 	
 	pass # Replace with function body.
 
